@@ -4,6 +4,7 @@ window.onload = function() {
   svgLine();
   shapeImagesOnScrollInit();
   blocksInit();
+  textSliderinit();
 };
 
 
@@ -214,4 +215,33 @@ function blocksInit() {
       stagger:.3
   });
 
+}
+
+function textSliderinit() {
+  gsap.set('.slider-text',{xPercent:-50})
+    
+    let boxes = document.querySelectorAll(".slider-text__box"),
+        boxWidth = 1800,
+        totalWidth = boxWidth * 3,  // * n of boxes 
+        time = 11,
+        // dirFromLeft = "+=" + totalWidth ,
+        dirFromRight = "-=" + totalWidth;
+    
+    gsap.set(boxes, {
+      x:function(i) {
+        return i * boxWidth;
+      }
+    });
+
+    let mod = gsap.utils.wrap(0, totalWidth);
+
+    gsap.to(boxes, {
+      x: dirFromRight, //set slider direction (to left = dirFromRight / to right = dirFromLeft)
+      duration:time, 
+      ease:'none',
+      repeat:-1,
+      modifiers: {
+        x: x => mod(parseFloat(x)) + "px"
+      },
+    });
 }
