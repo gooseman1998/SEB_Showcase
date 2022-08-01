@@ -23,13 +23,13 @@ function colorChange() {
   });
 }
 
-  function changeColor() {
-      let hoverSections = document.querySelectorAll('.text-hover');
+function changeColor() {
+    let hoverSections = document.querySelectorAll('.text-hover');
 
-      hoverSections.forEach((section) => {
-          section.classList.toggle('text-hover--dark');
-      });
-  }
+    hoverSections.forEach((section) => {
+        section.classList.toggle('text-hover--dark');
+    });
+}
 
   
 function showGifOnHover() {
@@ -87,5 +87,35 @@ function showGifOnHover() {
           ySetCircle(pos.y - (gif.offsetHeight / 2));
       });
   });
+}
 
+function svgLine() {
+  const svgPaths = document.querySelectorAll('.pin-svg__path');
+  const svgShips = document.querySelectorAll('.pin-svg__ship');
+  let index = 0;
+
+  svgPaths.forEach(path => {
+      gsap.to(svgShips[index], {
+          duration: 5,
+
+          ease: "none",
+          immediateRender: true,
+
+          scrollTrigger: {
+              trigger: svgPaths[index],
+              start: "top top",
+              end: 'bottom bottom',
+              scrub: 5,
+              // markers: true,
+          },
+          motionPath: {
+              path: svgPaths[index],
+              align: svgPaths[index],
+              // autoRotate: false,
+              // autoRotate: true,
+              autoRotate: 90,
+          }
+      }); 
+      index++;
+  });
 }
