@@ -2,6 +2,7 @@ window.onload = function() {
   colorChange();
   showGifOnHover();
   svgLine();
+  shapeImagesOnScrollInit();
 };
 
 
@@ -118,4 +119,82 @@ function svgLine() {
       }); 
       index++;
   });
+}
+
+function shapeImagesOnScrollInit() {
+  let intensity = gsap.utils.clamp(-5,5 ); //Set intensity of curve, the higher, the more curve
+  let hasScrolled = false;
+
+  let imgs = document.querySelectorAll('.following-images__img--vertical');
+  let coordinationsPositive = [ [50, 5.5], [62.5, 5], [75, 4.1], [87.5, 2.5], [100, 0], [100, 94.5], [87.5, 97], [75, 98.6], [62.5, 99.5], [50, 100], [37.5, 99.5], [25, 98.6], [12.5, 97], [0, 94.5], [0, 0], [12.5, 2.5], [25, 4.1], [37.5, 5] ];
+  let coordinationsNegative = [ [50, 0], [62.5, .5], [75, 1.4], [87.5, 3], [100, 5.5], [100, 100], [87.5, 97.5], [75, 95.9], [62.5, 95], [50, 94.5], [37.5, 95], [25, 95.9], [12.5, 97.5], [0, 100], [0, 5.5], [12.5, 3], [25, 1.4], [37.5, .5] ];
+  let coordinationsNeutral = "polygon(50% 0%, 62.5% 0%, 75% 0%, 87.5% 0%, 100% 0%, 100% 100%, 87.5% 100%, 75% 100%, 62.5% 100%, 50% 100%, 37.5% 100%, 25% 100%, 12.5% 100%, 0% 100%, 0% 0%, 12.5% 0%, 25% 0%, 37.5% 0%)";
+
+  ShapeImagesOnScroll(imgs, intensity, coordinationsPositive, coordinationsNegative, coordinationsNeutral);
+    
+  let imgsH = document.querySelectorAll('.following-images__img--horizontal');
+  let coordinationsPositiveH = [ [5.5, 0],[3, 12.5],[1.4, 25],[.5, 37.5],[0, 50],[.5, 62.5],[1.4, 75],[3, 87.5],[5.5, 100],[100, 100],[97.5, 87.5],[95.9, 75],[95, 62.5],[94.5, 50],[95, 37.5],[95.9, 25],[97.5, 12.5],[100, 0] ];
+  let coordinationsNegativeH = [ [0, 0],[2.5, 12.5],[4.1, 25],[5, 37.5],[5.5, 50],[5, 62.5],[4.1, 75],[2.5, 87.5],[0, 100],[94.5, 100],[97, 87.5],[98.6, 75],[99.5, 62.5],[100, 50],[99.5, 37.5],[98.6, 25],[97, 12.5],[94.5, 0] ];
+  let coordinationsNeutralH = "polygon(0% 0%, 0% 12.5%, 0% 25%, 0% 37.5%, 0% 50%, 0% 62.5%, 0% 75%, 0% 87.5%, 0% 100%, 100% 100%, 100% 87.5%, 100% 75%, 100% 62.5%, 100% 50%, 100% 37.5%, 100% 25%, 100% 12.5%, 100% 0%)";
+
+  ShapeImagesOnScroll(imgsH, intensity, coordinationsPositiveH, coordinationsNegativeH, coordinationsNeutralH, 'horizontal');
+}
+        
+function ShapeImagesOnScroll(imgSection, intensity, shapePositive, shapeNegative, shapeNeutral, direction = "vertical") {
+  console.log(direction);
+  ScrollTrigger.create({
+    onUpdate: (self) => {
+      let velocity = intensity(self.getVelocity() / -300);
+      
+      if (velocity >= 1) {
+        gsap.from(imgSection, {
+          clipPath: fillMatrix(shapePositive, velocity, direction)
+        });
+      } else if (velocity < 0) {
+        gsap.from(imgSection, {
+          clipPath: fillMatrix(shapeNegative, Math.abs(velocity), direction)
+        });
+      } else { 
+        gsap.to(imgSection, {
+          clipPath: shapeNeutral
+        });
+      }
+      gsap.to(imgSection, {
+        clipPath: shapeNeutral
+      });
+
+    }
+  });
+}
+
+function fillMatrix(matrix, intensity, direction) {
+  intensity = (intensity*20) / 100;
+  polygon ="";
+
+  for (i = 0; i <= matrix.length -1; i++) {
+    if(i == 0) polygon += "polygon(";
+
+    if (direction == "vertical") percentage = matrix[i][1];
+    else percentage = matrix[i][0];
+    
+    if (percentage > 50) {
+      dif = 100 - percentage;
+      newPercentage = ( dif - ((dif * intensity) *.6));
+      percentage += newPercentage ;  
+    }
+    else percentage = (percentage * intensity) * .6;
+
+    if (direction == "vertical") {
+      polygon += matrix[i][0] + "% ";
+      polygon += percentage + "%";
+    } else {
+      polygon += percentage + "% ";
+      polygon += matrix[i][1] + "%";
+    }
+
+    if (!(i == (matrix.length-1))) polygon += ", ";
+    else polygon += ")";
+  }
+  
+  return polygon;
 }
