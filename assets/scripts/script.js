@@ -3,6 +3,7 @@ window.onload = function() {
   showGifOnHover();
   svgLine();
   shapeImagesOnScrollInit();
+  blocksInit();
 };
 
 
@@ -197,4 +198,20 @@ function fillMatrix(matrix, intensity, direction) {
   }
   
   return polygon;
+}
+
+
+function blocksInit() {
+  
+    gsap.from('.blocks__square', {
+      scrollTrigger: {
+          trigger:".blocks",
+          toggleActions: "restart resume restart resume",
+      },
+      duration:2,
+      opacity:0,
+      y:"random(-550, 550)",
+      stagger:.3
+  });
+
 }
