@@ -1,0 +1,205 @@
+// Typography
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap');
+
+$font-family-base: "Raleway",
+sans-serif;
+$font-family-heading: "Playfair Display",
+serif;
+
+$font-weight-base: 400;
+$font-weight-reg: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$font-size-xs: 10px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-xxl: 130px;
+
+$font-size-h1: 60px;
+$font-size-h2: 40px;
+$font-size-h3: 30px;
+$font-size-h4: 28px;
+$font-size-h5: 20px;
+$font-size-h6: $font-size-md;
+
+$font-size-link: 18px;
+
+$heading-color: color(white);
+$body-base-color: color(white);
+
+body {
+  color: $body-base-color;
+  font-family: $font-family-base;
+  font-size: $font-size-md;
+  font-weight: $font-weight-reg;
+  line-height: 30px;
+  margin: 0;
+  overflow-x: hidden;
+  letter-spacing: 1px;
+}
+
+// Headings
+.h1,
+h1,
+.h2,
+h2,
+.h3,
+h3,
+.h4,
+h4,
+.h5,
+h5,
+.h6,
+h6 {
+  color: $heading-color;
+  font-family: $font-family-heading;
+  line-height: 40px;
+  font-weight: $font-weight-base;
+}
+
+.h1,
+h1 {
+  font-size: $font-size-h1;
+  font-weight: $font-weight-bold;
+
+  @media (max-width: 576px) {
+    font-size: $font-size-h2;
+
+  }
+}
+
+.h2,
+h2 {
+  font-size: $font-size-h2;
+
+  @media (max-width: 576px) {
+    font-size: $font-size-h3;
+  }
+}
+
+.h3,
+h3 {
+  font-size: $font-size-h3;
+}
+
+.h4,
+h4 {
+  font-size: $font-size-h4;
+}
+
+.h5,
+h5 {
+  font-size: $font-size-h5;
+  font-family: $font-family-base;
+}
+
+.h6,
+h6 {
+  font-size: $font-size-h6;
+}
+
+a {
+  text-decoration: none;
+  color: color(primary);
+  transition: color .2s ease-in-out;
+
+  &:hover {
+    color: color(secondary);
+  }
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
+}
+
+// section 
+section,
+.section {
+  overflow-x: hidden;
+}
+
+//utils 
+img {
+  object-fit: cover;
+  background-repeat: no-repeat;
+  object-position: center;
+}
+
+.p {
+  &--big {
+    padding: 100px 0 !important;
+  }
+
+  &--small {
+    padding: 20px 0 !important;
+  }
+
+  &--t-big {
+    padding-top: 100px !important;
+  }
+
+  &--b-big {
+    padding-bottom: 100px !important;
+  }
+
+  &--t-small {
+    padding-top: 40px !important;
+
+  }
+
+  &--b-small {
+    padding-bottom: 40px !important;
+  }
+
+  &--t-none {
+    padding-top: 0 !important;
+
+  }
+
+  &--b-none {
+    padding-bottom: 0 !important;
+  }
+
+  &--none {
+    padding: 0 !important;
+  }
+}
+
+.m {
+  &--big {
+    margin: 100px 0;
+  }
+
+  &--small {
+    margin: 20px 0;
+  }
+
+  &--t-big {
+    margin-top: 100px;
+  }
+
+  &--b-big {
+    margin-bottom: 100px;
+  }
+
+  &--t-small {
+    margin-top: 40px;
+
+  }
+
+  &--b-small {
+    margin-bottom: 40px;
+  }
+
+  &--none {
+    margin: 0;
+  }
+}

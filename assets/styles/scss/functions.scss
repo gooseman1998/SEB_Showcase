@@ -1,0 +1,21 @@
+// colors
+$colors: (primary: #BEA4B8,
+  secondary:#9f3186,
+  white: #fff,
+  black: #000,
+
+);
+
+@function color($value: primary) {
+  @return map-get($colors, $value);
+}
+
+// shadows
+$shadows: (xs: 0px 10px 20px 0px color(black),
+  sm: 10px 10px 30px color(black),
+);
+
+
+@function shadow($value: xs) {
+  @return map-get($shadows, $value);
+}
