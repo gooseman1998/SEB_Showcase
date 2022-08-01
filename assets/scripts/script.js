@@ -5,6 +5,7 @@ window.onload = function() {
   shapeImagesOnScrollInit();
   blocksInit();
   textSliderinit();
+  panelsInit();
 };
 
 
@@ -244,4 +245,23 @@ function textSliderinit() {
         x: x => mod(parseFloat(x)) + "px"
       },
     });
+}
+
+function panelsInit() {
+  
+  let sections = gsap.utils.toArray(".panel");
+
+  gsap.to(sections, {
+    xPercent: -100 * (sections.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".panels",
+      pin: true,
+      start:"center center",
+      scrub: 1,
+      snap: 1 / (sections.length - 1),
+      end: "+=4000", //slider speed
+    }
+  });
+
 }
